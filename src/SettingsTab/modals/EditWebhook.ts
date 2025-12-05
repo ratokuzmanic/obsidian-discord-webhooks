@@ -1,7 +1,7 @@
 import { Modal, Setting, App } from 'obsidian';
-import { Webhook } from './types';
+import { Webhook } from '../../types';
 
-export class WebhookModal extends Modal {
+export default class EditWebhookModal extends Modal {
   private editedWebhook: Webhook;
 
   constructor(

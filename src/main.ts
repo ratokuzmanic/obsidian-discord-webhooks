@@ -1,6 +1,6 @@
 import { Plugin, Notice } from 'obsidian';
 import { DiscordWebhooksSettings } from './types';
-import DiscordWebhooksSettingTab from './DiscordWebhooksSettingTab';
+import SettingsTab from './SettingsTab';
 import Commands from './Commands';
 
 const DEFAULT_SETTINGS: DiscordWebhooksSettings = {
@@ -15,7 +15,7 @@ export default class DiscordWebhooksPlugin extends Plugin {
 
   async onload() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
-    this.addSettingTab(new DiscordWebhooksSettingTab(this.app, this));
+    this.addSettingTab(new SettingsTab(this.app, this));
 
     this.commands = new Commands(this);
     this.commands.registerCommands();
