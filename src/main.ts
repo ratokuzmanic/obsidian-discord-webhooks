@@ -1,11 +1,11 @@
-import { Plugin } from 'obsidian';
+import { Plugin, Notice } from 'obsidian';
 import { DiscordWebhooksSettings } from './types';
 import DiscordWebhooksSettingTab from './DiscordWebhooksSettingTab';
 import Commands from './Commands';
 
 const DEFAULT_SETTINGS: DiscordWebhooksSettings = {
   webhooks: [],
-  defaultWebhookId: '',
+  selectedTextWebhookId: '',
   messages: []
 };
 
@@ -18,12 +18,47 @@ export default class DiscordWebhooksPlugin extends Plugin {
     this.addSettingTab(new DiscordWebhooksSettingTab(this.app, this));
 
     this.commands = new Commands(this);
-    this.commands.enable();
     this.commands.registerCommands();
-  }
 
-  onunload() {
-    this.commands.disable();
+    this.registerEvent(
+      this.app.workspace.on('file-menu', menu => {
+        menu.addItem(item => {
+          item
+            .setTitle('Share selected text to Discord')
+            .setIcon('share')
+            .onClick(() => {
+              const selectedText = document.getSelection()?.toString().trim();
+
+              if (!selectedText) {
+                new Notice('You need to select text first.');
+                return;
+              }
+
+              if (!this.settings.selectedTextWebhookId) {
+                new Notice(
+                  'You need to select a webhook to use for sharing selected text first (check out plugin settings).'
+                );
+                return;
+              }
+
+              const webhookUrl = this.settings.webhooks.find(
+                webhook => webhook.id === this.settings.selectedTextWebhookId
+              )!.url;
+              fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  content: selectedText
+                })
+              })
+                .then(() => new Notice('Sent to Discord'))
+                .catch(() => new Notice('Something went wrong'));
+            });
+        });
+      })
+    );
   }
 
   async saveSettings() {

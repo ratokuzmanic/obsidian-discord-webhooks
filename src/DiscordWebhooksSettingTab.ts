@@ -132,10 +132,10 @@ export default class DiscordWebhooksSettingTab extends PluginSettingTab {
       deleteButton.addEventListener('click', async e => {
         e.stopPropagation();
         if (
-          this.plugin.settings.defaultWebhookId ===
+          this.plugin.settings.selectedTextWebhookId ===
           this.plugin.settings.webhooks[index].id
         ) {
-          this.plugin.settings.defaultWebhookId = '';
+          this.plugin.settings.selectedTextWebhookId = '';
         }
         this.plugin.settings.webhooks.splice(index, 1);
         await this.plugin.saveSettings();
@@ -147,7 +147,7 @@ export default class DiscordWebhooksSettingTab extends PluginSettingTab {
 
     if (this.plugin.settings.webhooks.length === 0) {
       containerEl.createEl('div', {
-        text: 'You need at least one saved webhook to be able to send a selected text to Discord.',
+        text: 'You need at least one saved webhook to be able to send selected text to Discord.',
         cls: 'mobile-option-setting-item'
       });
     } else {
@@ -155,17 +155,16 @@ export default class DiscordWebhooksSettingTab extends PluginSettingTab {
         this.plugin.settings.webhooks.map(webhook => [webhook.id, webhook.name])
       );
       new Setting(containerEl)
-        .setName('Webhook')
         .setDesc(
-          'This webhook will be used to send selected text in a Note to Discord as a text message without embeds'
+          'This webhook will be used to send text selected in preview or editor to Discord. Click on the editor menu and then on "Share selected text to Discord" to run it.'
         )
         .addDropdown(dropdown =>
           dropdown
             .addOption('', 'Please select....')
             .addOptions(options)
-            .setValue(this.plugin.settings.defaultWebhookId)
+            .setValue(this.plugin.settings.selectedTextWebhookId)
             .onChange(async webhookId => {
-              this.plugin.settings.defaultWebhookId = webhookId;
+              this.plugin.settings.selectedTextWebhookId = webhookId;
               await this.plugin.saveSettings();
               this.display();
             })

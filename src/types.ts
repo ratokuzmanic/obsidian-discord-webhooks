@@ -1,6 +1,6 @@
 export interface DiscordWebhooksSettings {
   webhooks: Webhook[];
-  defaultWebhookId: string;
+  selectedTextWebhookId: string;
   messages: Message[];
 }
 
