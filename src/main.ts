@@ -4,6 +4,7 @@ import DiscordWebhooksSettingTab from './DiscordWebhooksSettingTab';
 
 const DEFAULT_SETTINGS: DiscordWebhooksSettings = {
   webhooks: [],
+  defaultWebhookId: '',
   messages: []
 };
 

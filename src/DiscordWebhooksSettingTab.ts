@@ -1,4 +1,4 @@
-import { App, PluginSettingTab, setIcon } from 'obsidian';
+import { App, PluginSettingTab, Setting, setIcon } from 'obsidian';
 import DiscordWebhooksPlugin from './main';
 import { WebhookModal } from './WebhookModal';
 import { Webhook } from './types';
@@ -14,8 +14,8 @@ export default class DiscordWebhooksSettingTab extends PluginSettingTab {
   private addSettingsHeader(
     containerEl: HTMLElement,
     title: string,
-    buttonAriaLabel: string,
-    onAdd: () => void
+    buttonAriaLabel?: string,
+    onAdd?: () => void
   ): void {
     const heading = containerEl.createDiv({
       cls: 'setting-item setting-item-heading'
@@ -26,20 +26,22 @@ export default class DiscordWebhooksSettingTab extends PluginSettingTab {
       cls: 'setting-item-info'
     });
 
-    const controls = heading.createEl('div', {
-      cls: 'setting-item-control'
-    });
-    const addButton = controls.createEl('button', {
-      cls: 'clickable-icon extra-setting-button',
-      attr: {
-        'aria-label': buttonAriaLabel
-      }
-    });
-    setIcon(addButton, 'circle-plus');
-    addButton.addEventListener('click', async e => {
-      e.stopPropagation();
-      onAdd();
-    });
+    if (buttonAriaLabel && onAdd) {
+      const controls = heading.createEl('div', {
+        cls: 'setting-item-control'
+      });
+      const addButton = controls.createEl('button', {
+        cls: 'clickable-icon extra-setting-button',
+        attr: {
+          'aria-label': buttonAriaLabel
+        }
+      });
+      setIcon(addButton, 'circle-plus');
+      addButton.addEventListener('click', async e => {
+        e.stopPropagation();
+        onAdd();
+      });
+    }
   }
 
   private openWebhookModal(webhook: Webhook, index: number): void {
@@ -84,7 +86,7 @@ export default class DiscordWebhooksSettingTab extends PluginSettingTab {
       this.display();
     });
 
-    const webhooksList = containerEl.createDiv('webhooks-list');
+    const webhooksList = containerEl.createDiv('discord-webhooks-list');
 
     if (this.plugin.settings.webhooks.length === 0) {
       webhooksList.createEl('div', {
@@ -94,7 +96,7 @@ export default class DiscordWebhooksSettingTab extends PluginSettingTab {
     }
 
     this.plugin.settings.webhooks.forEach((webhook, index) => {
-      const webhookContainer = webhooksList.createDiv('webhook-item');
+      const webhookContainer = webhooksList.createDiv('discord-webhooks-item');
       webhookContainer.addClass('setting-item');
 
       const info = webhookContainer.createDiv('setting-item-info');
@@ -129,10 +131,45 @@ export default class DiscordWebhooksSettingTab extends PluginSettingTab {
 
       deleteButton.addEventListener('click', async e => {
         e.stopPropagation();
+        if (
+          this.plugin.settings.defaultWebhookId ===
+          this.plugin.settings.webhooks[index].id
+        ) {
+          this.plugin.settings.defaultWebhookId = '';
+        }
         this.plugin.settings.webhooks.splice(index, 1);
         await this.plugin.saveSettings();
         this.display();
       });
     });
+
+    this.addSettingsHeader(containerEl, 'Selected Text Webhook');
+
+    if (this.plugin.settings.webhooks.length === 0) {
+      containerEl.createEl('div', {
+        text: 'You need at least one saved webhook to be able to send a selected text to Discord.',
+        cls: 'mobile-option-setting-item'
+      });
+    } else {
+      const options: Record<string, string> = Object.fromEntries(
+        this.plugin.settings.webhooks.map(webhook => [webhook.id, webhook.name])
+      );
+      new Setting(containerEl)
+        .setName('Webhook')
+        .setDesc(
+          'This webhook will be used to send selected text in a Note to Discord as a text message without embeds'
+        )
+        .addDropdown(dropdown =>
+          dropdown
+            .addOption('', 'Please select....')
+            .addOptions(options)
+            .setValue(this.plugin.settings.defaultWebhookId)
+            .onChange(async webhookId => {
+              this.plugin.settings.defaultWebhookId = webhookId;
+              await this.plugin.saveSettings();
+              this.display();
+            })
+        );
+    }
   }
 }

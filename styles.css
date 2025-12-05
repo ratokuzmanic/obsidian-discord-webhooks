@@ -1,3 +1,7 @@
 .discord-webhooks.modal-title {
   padding-bottom: var(--p-spacing);
 }
+
+.discord-webhooks-list {
+  margin-bottom: 0.75em;
+}
