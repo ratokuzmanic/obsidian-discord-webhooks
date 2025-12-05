@@ -11,6 +11,8 @@ export interface Webhook {
 }
 
 export interface Message {
+  id: string;
+  name: string;
   webhookId: string;
-  payload: string | JSON;
+  payload: string;
 }

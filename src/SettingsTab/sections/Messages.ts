@@ -1,27 +1,32 @@
 import { setIcon } from 'obsidian';
 import DiscordWebhooksPlugin from '../../main';
-import EditWebhookModal from '../modals/EditWebhook';
-import { Webhook } from '../../types';
+import EditMessageModal from '../modals/EditMessage';
+import { Webhook, Message } from '../../types';
 
-export default class WebhookSection {
+export default class MessagesSection {
   constructor(
     private plugin: DiscordWebhooksPlugin,
     private refresh: () => void
   ) {}
 
-  private openEditWebhookModal(webhook: Webhook, index: number) {
-    const modal = new EditWebhookModal(
+  private openEditMessageModal(
+    message: Message,
+    webhooks: Webhook[],
+    index: number
+  ) {
+    const modal = new EditMessageModal(
       this.plugin.app,
-      webhook,
+      message,
+      webhooks,
       index,
-      this.saveWebhookChanges.bind(this)
+      this.saveMessageChanges.bind(this)
     );
     modal.open();
   }
 
-  private async saveWebhookChanges(index: number, updates: Partial<Webhook>) {
-    this.plugin.settings.webhooks[index] = {
-      ...this.plugin.settings.webhooks[index],
+  private async saveMessageChanges(index: number, updates: Partial<Message>) {
+    this.plugin.settings.messages[index] = {
+      ...this.plugin.settings.messages[index],
       ...updates
     };
     await this.plugin.saveSettings();
@@ -30,29 +35,31 @@ export default class WebhookSection {
 
   display(containerEl: HTMLElement) {
     const header = containerEl.createDiv('setting-item setting-item-heading');
-    header.createDiv({ text: 'Webhooks', cls: 'setting-item-info' });
+    header.createDiv({ text: 'Messages', cls: 'setting-item-info' });
 
     const addButton = header
       .createDiv('setting-item-control')
       .createEl('button', {
         cls: 'clickable-icon extra-setting-button',
-        attr: { 'aria-label': 'Add webhook' }
+        attr: { 'aria-label': 'Add message' }
       });
     setIcon(addButton, 'circle-plus');
 
     addButton.onclick = async e => {
       e.stopPropagation();
-      const newWebhook: Webhook = {
+      const newMessage: Message = {
         id: crypto.randomUUID(),
-        name: 'New Webhook',
-        url: ''
+        name: 'New Message',
+        webhookId: '',
+        payload: ''
       };
-      this.plugin.settings.webhooks.push(newWebhook);
+      this.plugin.settings.messages.push(newMessage);
       await this.plugin.saveSettings();
 
-      this.openEditWebhookModal(
-        newWebhook,
-        this.plugin.settings.webhooks.length - 1
+      this.openEditMessageModal(
+        newMessage,
+        this.plugin.settings.webhooks,
+        this.plugin.settings.messages.length - 1
       );
 
       this.refresh();
@@ -60,50 +67,45 @@ export default class WebhookSection {
 
     const list = containerEl.createDiv('discord-webhooks-list');
 
-    if (this.plugin.settings.webhooks.length === 0) {
+    if (this.plugin.settings.messages.length === 0) {
       list.createEl('div', {
-        text: "You don't have any saved webhooks. Start by adding one.",
+        text: "You don't have any saved messages. Start by adding one.",
         cls: 'mobile-option-setting-item'
       });
       return;
     }
 
-    this.plugin.settings.webhooks.forEach((webhook, index) => {
+    this.plugin.settings.messages.forEach((message, index) => {
       const item = list.createDiv('discord-webhooks-item');
       item.addClass('setting-item');
 
       const info = item.createDiv('setting-item-info');
-      info.createDiv('setting-item-name').setText(webhook.name);
+      info.createDiv('setting-item-name').setText(message.name);
 
       const controls = item.createDiv('setting-item-control');
 
       const editButton = controls.createEl('button', {
         cls: 'clickable-icon',
-        attr: { 'aria-label': 'Edit webhook' }
+        attr: { 'aria-label': 'Edit message' }
       });
       setIcon(editButton, 'pencil');
       editButton.onclick = e => {
         e.stopPropagation();
-        this.openEditWebhookModal(webhook, index);
+        this.openEditMessageModal(
+          message,
+          this.plugin.settings.webhooks,
+          index
+        );
       };
 
       const deleteButton = controls.createEl('button', {
         cls: 'clickable-icon',
-        attr: { 'aria-label': 'Delete webhook' }
+        attr: { 'aria-label': 'Delete message' }
       });
       setIcon(deleteButton, 'trash');
       deleteButton.onclick = async e => {
         e.stopPropagation();
-
-        if (this.plugin.settings.selectedTextWebhookId === webhook.id) {
-          this.plugin.settings.selectedTextWebhookId = '';
-        }
-
-        this.plugin.settings.messages = this.plugin.settings.messages.filter(
-          message => message.webhookId !== webhook.id
-        );
-
-        this.plugin.settings.webhooks.splice(index, 1);
+        this.plugin.settings.messages.splice(index, 1);
         await this.plugin.saveSettings();
         this.refresh();
       };
