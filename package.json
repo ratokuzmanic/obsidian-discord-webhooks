@@ -1,21 +1,28 @@
 {
-	"name": "obsidian-discord-webhooks",
-	"version": "1.0.0",
-	"description": "TBD",
-	"main": "src/main.js",
-	"scripts": {
-		"dev": "node esbuild.config.mjs",
-		"build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production"
-	},
-	"keywords": [],
-	"author": "Rato Kuzmanić",
-	"license": "MIT",
-	"devDependencies": {
-		"@types/node": "^16.11.6",
-		"builtin-modules": "3.3.0",
-		"esbuild": "0.17.3",
-		"obsidian": "latest",
-		"tslib": "2.4.0",
-		"typescript": "4.7.4"
-	}
+  "name": "obsidian-discord-webhooks",
+  "version": "1.0.0",
+  "description": "TBD",
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+    "prettier": "npx prettier . --write"
+  },
+  "keywords": [],
+  "author": "Rato Kuzmanić",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^16.11.6",
+    "builtin-modules": "3.3.0",
+    "esbuild": "0.17.3",
+    "obsidian": "latest",
+    "prettier": "3.7.4",
+    "tslib": "2.4.0",
+    "typescript": "4.7.4"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "arrowParens": "avoid",
+    "trailingComma": "none"
+  }
 }

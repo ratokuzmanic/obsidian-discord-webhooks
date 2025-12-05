@@ -1,10 +1,10 @@
 {
-	"id": "discord-webhooks",
-	"name": "Discord Webhooks",
-	"version": "1.0.0",
-	"minAppVersion": "0.15.0",
-	"description": "TBD",
-	"author": "Rato Kuzmanić",
-	"authorUrl": "https://github.com/ratokuzmanic",
-	"isDesktopOnly": false
+  "id": "discord-webhooks",
+  "name": "Discord Webhooks",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "TBD",
+  "author": "Rato Kuzmanić",
+  "authorUrl": "https://github.com/ratokuzmanic",
+  "isDesktopOnly": false
 }
