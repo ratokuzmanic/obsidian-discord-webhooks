@@ -56,7 +56,7 @@ export default class EditMessageModal extends Modal {
     new Setting(modalContent)
       .setName('JSON Payload')
       .setDesc(
-        "This will be stringified and sent to the selected webhook URL. Must be valid according to Discord's current specification."
+        "This will be sent as-is to the selected webhook URL. Must be valid according to Discord's current specification."
       )
       .addTextArea(text =>
         text
