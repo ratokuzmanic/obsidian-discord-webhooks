@@ -48,13 +48,13 @@ export default class EditMessageModal extends Modal {
         .addOption('', 'Please select…')
         .addOptions(options)
         .setValue(this.editedMessage.webhookId)
-        .onChange(async id => {
+        .onChange(id => {
           this.editedMessage.webhookId = id;
         });
     });
 
     new Setting(modalContent)
-      .setName('JSON Payload')
+      .setName('JSON payload')
       .setDesc(
         "This will be sent as-is to the selected webhook URL. Must be valid according to Discord's current specification."
       )
@@ -71,10 +71,12 @@ export default class EditMessageModal extends Modal {
       cls: 'mod-cta'
     });
 
-    saveButton.addEventListener('click', async e => {
+    saveButton.addEventListener('click', e => {
       e.stopPropagation();
-      await this.onUpdate(this.index, this.editedMessage);
-      this.close();
+      (async () => {
+        await this.onUpdate(this.index, this.editedMessage);
+        this.close();
+      })();
     });
 
     const cancelButton = buttons.createEl('button', {

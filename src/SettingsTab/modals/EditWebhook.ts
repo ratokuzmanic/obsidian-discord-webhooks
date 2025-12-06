@@ -29,9 +29,7 @@ export default class EditWebhookModal extends Modal {
 
     new Setting(modalContent)
       .setName('Webhook name')
-      .setDesc(
-        'A user-friendly name to differentiate various Discord webhook URLs'
-      )
+      .setDesc('A user-friendly name to differentiate various webhook URLs')
       .addText(text =>
         text
           .setValue(this.editedWebhook.name)
@@ -53,10 +51,12 @@ export default class EditWebhookModal extends Modal {
       cls: 'mod-cta'
     });
 
-    saveButton.addEventListener('click', async e => {
+    saveButton.addEventListener('click', e => {
       e.stopPropagation();
-      await this.onUpdate(this.index, this.editedWebhook);
-      this.close();
+      (async () => {
+        await this.onUpdate(this.index, this.editedWebhook);
+        this.close();
+      })();
     });
 
     const cancelButton = buttons.createEl('button', {

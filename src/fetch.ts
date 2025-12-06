@@ -1,11 +1,12 @@
-import { Notice } from 'obsidian';
+import { Notice, requestUrl } from 'obsidian';
 
 export const sendToDiscord = async (
   url: string,
   payload: string
 ): Promise<void> => {
   try {
-    await fetch(url, {
+    await requestUrl({
+      url,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
