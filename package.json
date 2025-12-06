@@ -8,7 +8,11 @@
     "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
     "prettier": "npx prettier . --write"
   },
-  "keywords": ["typescript", "discord-webhook", "obsidian-plugin"],
+  "keywords": [
+    "typescript",
+    "discord-webhook",
+    "obsidian-plugin"
+  ],
   "author": "ratokuzmanic",
   "license": "MIT",
   "devDependencies": {
