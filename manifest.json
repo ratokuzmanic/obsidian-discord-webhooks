@@ -1,7 +1,7 @@
 {
   "id": "discord-webhooks",
   "name": "Discord Webhooks",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "minAppVersion": "0.15.0",
   "description": "Send selected text or preset messages using saved Discord webhooks.",
   "author": "ratokuzmanic",
