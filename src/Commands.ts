@@ -1,5 +1,5 @@
-import { Notice } from 'obsidian';
 import DiscordWebhooksPlugin from './main';
+import { sendToDiscord } from './fetch';
 
 export default class Commands {
   private plugin: DiscordWebhooksPlugin;
@@ -23,16 +23,7 @@ export default class Commands {
       this.plugin.addCommand({
         id: commandId,
         name: `Send ${message.name} message to Discord`,
-        callback: () =>
-          fetch(webhookUrl, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: message.payload
-          })
-            .then(() => new Notice('Sent to Discord'))
-            .catch(() => new Notice('Something went wrong'))
+        callback: async () => await sendToDiscord(webhookUrl, message.payload)
       });
       this.registeredCommands.add(commandId);
     });
@@ -40,7 +31,7 @@ export default class Commands {
 
   unregisterCommands(): void {
     this.registeredCommands.forEach(commandId =>
-      this.plugin.app.commands.removeCommand(`discord-webhooks:${commandId}`)
+      this.plugin.removeCommand(commandId)
     );
     this.registeredCommands.clear();
   }

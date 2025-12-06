@@ -2,6 +2,7 @@ import { Plugin, Notice } from 'obsidian';
 import { DiscordWebhooksSettings } from './types';
 import SettingsTab from './SettingsTab';
 import Commands from './Commands';
+import { sendToDiscord } from './fetch';
 
 const DEFAULT_SETTINGS: DiscordWebhooksSettings = {
   webhooks: [],
@@ -26,7 +27,7 @@ export default class DiscordWebhooksPlugin extends Plugin {
           item
             .setTitle('Share selected text to Discord')
             .setIcon('share')
-            .onClick(() => {
+            .onClick(async () => {
               const selectedText = document.getSelection()?.toString().trim();
 
               if (!selectedText) {
@@ -44,17 +45,12 @@ export default class DiscordWebhooksPlugin extends Plugin {
               const webhookUrl = this.settings.webhooks.find(
                 webhook => webhook.id === this.settings.selectedTextWebhookId
               )!.url;
-              fetch(webhookUrl, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
+              await sendToDiscord(
+                webhookUrl,
+                JSON.stringify({
                   content: selectedText
                 })
-              })
-                .then(() => new Notice('Sent to Discord'))
-                .catch(() => new Notice('Something went wrong'));
+              );
             });
         });
       })
