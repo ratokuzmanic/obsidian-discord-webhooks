@@ -1,15 +1,15 @@
 {
   "name": "obsidian-discord-webhooks",
   "version": "1.0.0",
-  "description": "TBD",
+  "description": "Use saved Discord webhooks to send selected text or preset messages directly from Obsidian",
   "main": "src/main.js",
   "scripts": {
     "dev": "node esbuild.config.mjs",
     "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
     "prettier": "npx prettier . --write"
   },
-  "keywords": [],
-  "author": "Rato Kuzmanić",
+  "keywords": ["typescript", "discord-webhook", "obsidian-plugin"],
+  "author": "ratokuzmanic",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^16.11.6",

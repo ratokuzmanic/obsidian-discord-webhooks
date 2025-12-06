@@ -3,8 +3,8 @@
   "name": "Discord Webhooks",
   "version": "1.0.0",
   "minAppVersion": "0.15.0",
-  "description": "TBD",
-  "author": "Rato Kuzmanić",
+  "description": "Use saved Discord webhooks to send selected text or preset messages directly from Obsidian",
+  "author": "ratokuzmanic",
   "authorUrl": "https://github.com/ratokuzmanic",
   "isDesktopOnly": false
 }
