@@ -3,7 +3,7 @@
   "name": "Discord Webhooks",
   "version": "1.0.0",
   "minAppVersion": "0.15.0",
-  "description": "Use saved Discord webhooks to send selected text or preset messages directly from Obsidian",
+  "description": "Send selected text or preset messages using saved Discord webhooks.",
   "author": "ratokuzmanic",
   "authorUrl": "https://github.com/ratokuzmanic",
   "isDesktopOnly": false
