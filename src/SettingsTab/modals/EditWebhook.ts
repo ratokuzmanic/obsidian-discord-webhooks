@@ -29,7 +29,7 @@ export default class EditWebhookModal extends Modal {
 
     new Setting(modalContent)
       .setName('Webhook name')
-      .setDesc('A user-friendly name to differentiate various webhook URLs')
+      .setDesc('Enter a user-friendly name to differentiate webhooks')
       .addText(text =>
         text
           .setValue(this.editedWebhook.name)
@@ -53,7 +53,7 @@ export default class EditWebhookModal extends Modal {
 
     saveButton.addEventListener('click', e => {
       e.stopPropagation();
-      (async () => {
+      void (async () => {
         await this.onUpdate(this.index, this.editedWebhook);
         this.close();
       })();

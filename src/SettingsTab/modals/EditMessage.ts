@@ -73,7 +73,7 @@ export default class EditMessageModal extends Modal {
 
     saveButton.addEventListener('click', e => {
       e.stopPropagation();
-      (async () => {
+      void (async () => {
         await this.onUpdate(this.index, this.editedMessage);
         this.close();
       })();
