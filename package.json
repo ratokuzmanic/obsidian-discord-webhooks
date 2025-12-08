@@ -2,7 +2,7 @@
   "name": "obsidian-discord-webhooks",
   "version": "1.0.3",
   "description": "Send selected text or preset messages using saved Discord webhooks.",
-  "main": "src/main.js",
+  "main": "main.js",
   "scripts": {
     "dev": "node esbuild.config.mjs",
     "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
