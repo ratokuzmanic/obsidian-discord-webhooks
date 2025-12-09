@@ -14,7 +14,8 @@ export const sendToDiscord = async (
       body: payload
     });
     new Notice('Sent to Discord');
-  } catch {
-    new Notice('Something went wrong');
+  } catch (e) {
+    console.error(e);
+    new Notice('Could not send to Discord');
   }
 };
