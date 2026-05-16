@@ -15,7 +15,7 @@ export default class EditMessageModal extends Modal {
     ) => Promise<void>
   ) {
     super(app);
-    this.editedMessage = Object.create(this.message);
+    this.editedMessage = { ...this.message };
   }
 
   onOpen() {

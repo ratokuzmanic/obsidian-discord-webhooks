@@ -15,7 +15,11 @@ export default class DiscordWebhooksPlugin extends Plugin {
   commands: Commands;
 
   async onload() {
-    this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
+    this.settings = Object.assign(
+      {},
+      DEFAULT_SETTINGS,
+      (await this.loadData()) as DiscordWebhooksSettings
+    );
     this.addSettingTab(new SettingsTab(this.app, this));
 
     this.commands = new Commands(this);
@@ -28,7 +32,10 @@ export default class DiscordWebhooksPlugin extends Plugin {
             .setTitle('Share selected text to Discord')
             .setIcon('share')
             .onClick(async () => {
-              const selectedText = document.getSelection()?.toString().trim();
+              const selectedText = activeDocument
+                .getSelection()
+                ?.toString()
+                .trim();
 
               if (!selectedText) {
                 new Notice('You need to select text first.');

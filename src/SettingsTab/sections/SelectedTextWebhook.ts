@@ -12,7 +12,7 @@ export default class SelectedTextWebhookSection {
     });
 
     if (this.plugin.settings.webhooks.length === 0) {
-      containerEl.createEl('div', {
+      containerEl.createDiv({
         text: 'You need at least one saved webhook to send selected text to Discord.',
         cls: 'mobile-option-setting-item'
       });

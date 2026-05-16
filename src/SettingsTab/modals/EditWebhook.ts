@@ -14,7 +14,7 @@ export default class EditWebhookModal extends Modal {
     ) => Promise<void>
   ) {
     super(app);
-    this.editedWebhook = Object.create(this.webhook);
+    this.editedWebhook = { ...this.webhook };
   }
 
   onOpen() {

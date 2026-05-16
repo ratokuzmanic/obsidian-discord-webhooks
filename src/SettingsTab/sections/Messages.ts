@@ -19,7 +19,7 @@ export default class MessagesSection {
       message,
       webhooks,
       index,
-      this.saveMessageChanges.bind(this)
+      (index, updates) => this.saveMessageChanges(index, updates)
     );
     modal.open();
   }
@@ -68,7 +68,7 @@ export default class MessagesSection {
     const list = containerEl.createDiv('discord-webhooks-list');
 
     if (this.plugin.settings.messages.length === 0) {
-      list.createEl('div', {
+      list.createDiv({
         text: "You don't have any saved messages. Start by adding one.",
         cls: 'mobile-option-setting-item'
       });

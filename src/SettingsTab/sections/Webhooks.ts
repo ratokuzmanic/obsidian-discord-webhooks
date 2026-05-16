@@ -14,7 +14,7 @@ export default class WebhookSection {
       this.plugin.app,
       webhook,
       index,
-      this.saveWebhookChanges.bind(this)
+      (index, updates) => this.saveWebhookChanges(index, updates)
     );
     modal.open();
   }
@@ -61,7 +61,7 @@ export default class WebhookSection {
     const list = containerEl.createDiv('discord-webhooks-list');
 
     if (this.plugin.settings.webhooks.length === 0) {
-      list.createEl('div', {
+      list.createDiv({
         text: "You don't have any saved webhooks. Start by adding one.",
         cls: 'mobile-option-setting-item'
       });
