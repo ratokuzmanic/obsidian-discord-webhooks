@@ -57,8 +57,4 @@ Save your [Discord](https://discord.com/) webhooks and use them to send selected
 2. Choose **Discord Webhooks: Send [Message name] message to Discord**.
 3. The preset JSON payload will be sent via the selected webhook.
 
-## Background and scope
-
-This plugin was originally created for my D&D group while I'm DMing a _Curse of Strahd_ campaign, so it focuses on a small set of features we actually use at the virtual table. I plan to keep it maintained (especially for future Obsidian updates) and fix bugs as they come up, but I don't expect to add new features unless they're something I personally need for the campaign.
-
-Crafted by a human without the use of generative AI.
+_Crafted entirely by a human without the use of generative AI._
