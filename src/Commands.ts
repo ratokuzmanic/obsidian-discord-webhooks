@@ -17,9 +17,11 @@ export default class Commands {
       if (!message.webhookId) return;
 
       const commandId = `discord-webhook-${message.id}`;
-      const webhookUrl = this.plugin.settings.webhooks.find(
-        webhook => webhook.id === message.webhookId
-      )!.url;
+      const webhookUrl = this.plugin.settings.isTesting
+        ? this.plugin.settings.testWebhookUrl
+        : this.plugin.settings.webhooks.find(
+            webhook => webhook.id === message.webhookId
+          )!.url;
       this.plugin.addCommand({
         id: commandId,
         name: `Send ${message.name} message to Discord`,

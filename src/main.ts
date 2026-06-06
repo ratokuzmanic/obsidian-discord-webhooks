@@ -7,7 +7,9 @@ import { sendToDiscord } from './fetch';
 const DEFAULT_SETTINGS: DiscordWebhooksSettings = {
   webhooks: [],
   selectedTextWebhookId: '',
-  messages: []
+  messages: [],
+  isTesting: false,
+  testWebhookUrl: ''
 };
 
 export default class DiscordWebhooksPlugin extends Plugin {
@@ -49,9 +51,12 @@ export default class DiscordWebhooksPlugin extends Plugin {
                 return;
               }
 
-              const webhookUrl = this.settings.webhooks.find(
-                webhook => webhook.id === this.settings.selectedTextWebhookId
-              )!.url;
+              const webhookUrl = this.settings.isTesting
+                ? this.settings.testWebhookUrl
+                : this.settings.webhooks.find(
+                    webhook =>
+                      webhook.id === this.settings.selectedTextWebhookId
+                  )!.url;
               await sendToDiscord(
                 webhookUrl,
                 JSON.stringify({

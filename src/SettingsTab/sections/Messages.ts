@@ -34,6 +34,8 @@ export default class MessagesSection {
   }
 
   display(containerEl: HTMLElement) {
+    if (this.plugin.settings.webhooks.length === 0) return;
+
     const header = containerEl.createDiv('setting-item setting-item-heading');
     header.createDiv({ text: 'Messages', cls: 'setting-item-info' });
 

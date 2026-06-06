@@ -2,6 +2,8 @@ export interface DiscordWebhooksSettings {
   webhooks: Webhook[];
   selectedTextWebhookId: string;
   messages: Message[];
+  isTesting: boolean;
+  testWebhookUrl: string;
 }
 
 export interface Webhook {

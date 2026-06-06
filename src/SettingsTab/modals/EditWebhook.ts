@@ -36,13 +36,12 @@ export default class EditWebhookModal extends Modal {
           .onChange(value => (this.editedWebhook.name = value))
       );
 
-    new Setting(modalContent)
-      .setName('Webhook URL')
-      .addText(text =>
-        text
-          .setValue(this.editedWebhook.url)
-          .onChange(value => (this.editedWebhook.url = value))
-      );
+    new Setting(modalContent).setName('Webhook URL').addText(text =>
+      text
+        .setPlaceholder('https://discord.com/api/webhooks/...')
+        .setValue(this.editedWebhook.url)
+        .onChange(value => (this.editedWebhook.url = value))
+    );
 
     const buttons = contentEl.createDiv({ cls: 'modal-button-container' });
 

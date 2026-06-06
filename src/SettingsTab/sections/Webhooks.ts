@@ -62,7 +62,7 @@ export default class WebhookSection {
 
     if (this.plugin.settings.webhooks.length === 0) {
       list.createDiv({
-        text: "You don't have any saved webhooks. Start by adding one.",
+        text: "You don't have any saved webhooks. Start with this plugin by adding one.",
         cls: 'mobile-option-setting-item'
       });
       return;
