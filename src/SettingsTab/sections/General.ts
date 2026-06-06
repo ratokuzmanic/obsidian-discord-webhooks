@@ -52,7 +52,7 @@ export default class GeneralSection {
             this.plugin.settings.testWebhookUrl = value;
             await this.plugin.saveSettings();
           });
-        text.inputEl.setCssProps({ 'flex-grow': '1' });
+        text.inputEl.addClass('discord-webhooks-input');
       });
     }
   }

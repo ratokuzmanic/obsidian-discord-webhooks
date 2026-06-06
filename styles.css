@@ -5,3 +5,7 @@
 .discord-webhooks-list {
   margin-bottom: 0.75em;
 }
+
+.discord-webhooks-input {
+  flex-grow: 1;
+}
