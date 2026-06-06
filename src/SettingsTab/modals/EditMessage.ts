@@ -56,7 +56,25 @@ export default class EditMessageModal extends Modal {
     new Setting(modalContent)
       .setName('JSON payload')
       .setDesc(
-        "This will be sent as-is to the selected webhook URL. Must be valid according to Discord's current specification."
+        (() => {
+          const frag = document.createDocumentFragment();
+
+          frag.append(
+            "This will be sent as-is to the selected webhook URL. Must be valid according to Discord's current "
+          );
+
+          const link = document.createElement('a');
+          link.href =
+            'https://discord.com/developers/docs/resources/webhook#execute-webhook';
+          link.textContent = 'specification';
+          link.target = '_blank';
+          link.rel = 'noopener';
+
+          frag.append(link);
+          frag.append('.');
+
+          return frag;
+        })()
       )
       .addTextArea(text =>
         text

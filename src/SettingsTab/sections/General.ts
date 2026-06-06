@@ -8,14 +8,6 @@ export default class GeneralSection {
   ) {}
 
   display(containerEl: HTMLElement) {
-    if (this.plugin.settings.webhooks.length === 0) return;
-
-    const header = containerEl.createDiv('setting-item setting-item-heading');
-    header.createDiv({
-      text: 'General',
-      cls: 'setting-item-info'
-    });
-
     const options = Object.fromEntries(
       this.plugin.settings.webhooks.map(webhook => [webhook.id, webhook.name])
     );
@@ -39,7 +31,7 @@ export default class GeneralSection {
     new Setting(containerEl)
       .setName('Testing Mode')
       .setDesc(
-        'When enabled, all messages are sent to a specified test webhook instead of their usual destination.'
+        'When enabled, everything is sent to a test webhook instead of its usual destination.'
       )
       .addToggle(toggle =>
         toggle
@@ -52,15 +44,16 @@ export default class GeneralSection {
       );
 
     if (this.plugin.settings.isTesting) {
-      new Setting(containerEl).setName('Test Webhook URL').addText(text =>
+      new Setting(containerEl).setName('Test Webhook URL').addText(text => {
         text
           .setPlaceholder('https://discord.com/api/webhooks/...')
           .setValue(this.plugin.settings.testWebhookUrl)
           .onChange(async value => {
             this.plugin.settings.testWebhookUrl = value;
             await this.plugin.saveSettings();
-          })
-      );
+          });
+        text.inputEl.style.flexGrow = '1';
+      });
     }
   }
 }
