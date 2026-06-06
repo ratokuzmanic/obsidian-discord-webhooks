@@ -41,7 +41,7 @@ export default class EditWebhookModal extends Modal {
         .setPlaceholder('https://discord.com/api/webhooks/...')
         .setValue(this.editedWebhook.url)
         .onChange(value => (this.editedWebhook.url = value));
-      text.inputEl.style.flexGrow = '1';
+      text.inputEl.setCssProps({ 'flex-grow': '1' });
     });
 
     const buttons = contentEl.createDiv({ cls: 'modal-button-container' });
