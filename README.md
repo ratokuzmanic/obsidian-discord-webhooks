@@ -10,7 +10,8 @@ Save your [Discord](https://discord.com/) webhooks and use them to send selected
 ➕ **Add, edit, and delete Discord webhooks** for easy reuse—no need to constantly enter webhook URLs.  
 🎯 **Choose a default webhook** for sending selected text directly from the editor or preview via the editor menu.  
 💬 **Create, edit, and delete preset messages** (including rich embeds) that can be sent through any saved webhook.  
-⚡ **Send preset messages via Obsidian commands** with one command per message (works great with the [Buttons plugin](https://community.obsidian.md/plugins/buttons)).
+⚡ **Send preset messages via Obsidian commands** with one command per message (works great with the [Buttons plugin](https://community.obsidian.md/plugins/buttons)).   
+🧪 **Test your messages** using a simple toggle that sends everything to a specified test webhook URL.
 
 ## How to use
 
@@ -33,6 +34,7 @@ Save your [Discord](https://discord.com/) webhooks and use them to send selected
 ### Setting up messages
 
 1. Open the plugin settings.
+2. If you haven't added a webhook yet, create one following the steps above.
 2. Click the `+` icon to create a new message.
 3. Name your message—this name will appear in the command palette.
 4. Select a webhook from the dropdown to send this message's payload.
@@ -56,5 +58,14 @@ Save your [Discord](https://discord.com/) webhooks and use them to send selected
 1. Open the **Command Palette**.
 2. Choose **Discord Webhooks: Send [Message name] message to Discord**.
 3. The preset JSON payload will be sent via the selected webhook.
+
+### Testing your messages
+
+1. Open the plugin settings.
+2. Enable **Testing Mode**.
+3. Enter **Test Webhook URL**.
+4. Send content to Discord, and it will be sent to the test webhook URL instead of its usual destination.
+
+> **Note:** Test webhook URL is saved with plugin's settings, so you won't have to re-enter it even if you disable and re-enable the testing mode.
 
 _Crafted entirely by a human without the use of generative AI._
